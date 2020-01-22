@@ -44,16 +44,19 @@ app.post('/login', async function(req, res) {
     let data = await UserModel.findOne({$and : [{email},{password}]})
     console.log(data)
     if(!data) {
+        res.status(403).json({response : {},staus_code : 403, "message" : "Invalid"})
         console.log("no data")
     } else {
         console.log("success")
+        res.status(200).json({response : data, staus_code : 200,"message" : "success"})
+
     }
-  
+    
 });
 
 
 
 
-app.listen('3500', function(){
-    console.log("Server is running on port no. 3500");
+app.listen('3501', function(){
+    console.log("Server is running on port no. 3501");
 });
