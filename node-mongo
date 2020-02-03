@@ -14,9 +14,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 const mongoose = require('mongoose');
-const conn = mongoose.createConnection("mongodb://127.0.0.1:27017/muwaeed");;
-exports.mongoose = mongoose;
-exports.conn = conn;
+const conn = mongoose.createConnection("mongodb://127.0.0.1:27017/muwaeed");
 let userSchema = mongoose.Schema({
     email : {
         type : String,
@@ -44,11 +42,11 @@ app.post('/login', async function(req, res) {
     let data = await UserModel.findOne({$and : [{email},{password}]})
     console.log(data)
     if(!data) {
-        res.status(403).json({response : {},staus_code : 403, "message" : "Invalid"})
+        res.status(403).json({response : {},status_code : 403, "message" : "Invalid"})
         console.log("no data")
     } else {
         console.log("success")
-        res.status(200).json({response : data, staus_code : 200,"message" : "success"})
+        res.status(200).json({response : data, status_code : 200,"message" : "success"})
 
     }
     
