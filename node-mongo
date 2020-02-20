@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 const mongoose = require('mongoose');
-const conn = mongoose.createConnection("mongodb://127.0.0.1:27017/muwaeed");
+const conn = mongoose.createConnection("mongodb://127.0.0.1:27017/muwaeed", {useNewUrlParser: true, useUnifiedTopology: true});
 let userSchema = mongoose.Schema({
     email : {
         type : String,
@@ -36,10 +36,9 @@ var UserModel = conn.model('admin', userSchema);
 // For login codse
 app.post('/login', async function(req, res) {
     console.log("================== login calling=============", req.body)
-    var email = req.body.email;
-    var password = req.body.password;
+    let {email, password} = req.body
+    console.log(req.body.email)
     let data = await UserModel.findOne({$and : [{email},{password}]})
-    console.log(data)
     if(!data) {
         res.status(403).json({response : {},status_code : 403, "message" : "Invalid"})
         console.log("no data")
@@ -54,6 +53,7 @@ app.post('/login', async function(req, res) {
 
 
 
-app.listen('3501', function(){
-    console.log("Server is running on port no. 3501");
+
+app.listen('3500', function(){
+    console.log("Server is running on port no. 3500");
 });
